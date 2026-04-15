@@ -42,5 +42,3 @@ public:
 
     void INSERT(int key, RID value);
 };
-
-#endif
