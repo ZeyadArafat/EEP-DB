@@ -9,17 +9,16 @@
 
 class DiskManager {
 public:
-    void read_page(int page_id, char* buffer);
-    void write_page(int page_id, const char* buffer);
-    int allocate_page();
-    void deallocate_page(int page_id);
+    void read_page(page_id_t page_id, char* buffer);
+    void write_page(page_id_t page_id, const char* buffer);
+    page_id_t allocate_page();
+    void deallocate_page(page_id_t page_id);
 
-    DiskManager(const std::string& file_name);
-
+    explicit DiskManager(const std::string& file_name);
     ~DiskManager();
 
 private:
-    std::fstream db_file;
-    int next_page_id = 0;
-    std::vector<int> free_pages;
+    std::fstream db_file_;
+    page_id_t next_page_id_;
+    std::vector<page_id_t> free_pages_; // TODO: CAUTION!! free_pages_ list is memory ONLY should fix this later
 };

@@ -5,7 +5,7 @@
 class Page {
 public:
     char data[PAGE_SIZE];
-    using page_id_t = int;
+    page_id_t page_id;
     int pin_count = 0;
     bool is_dirty = false;
 };
