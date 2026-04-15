@@ -10,4 +10,7 @@ add_executable(EEPDB main.cpp
         src/execution/parser.cpp
         src/index/bp_tree.cpp
         src/storage/disk_manager.cpp
-        src/table/table_heap.cpp)
+        src/table/table_heap.cpp
+        include/storage/page.h
+        include/storage/buffer_pool_manager.h
+        include/config.h)
