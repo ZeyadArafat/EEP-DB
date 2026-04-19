@@ -18,7 +18,7 @@ public:
 private:
     char data_[PAGE_SIZE] {};
     page_id_t page_id_ = INVALID_PAGE_ID;
-    uint32_t pin_count_ = 0;
+    pin_count_t pin_count_ = 0;
     bool is_dirty_ = false;
 
     friend class BufferPoolManager;

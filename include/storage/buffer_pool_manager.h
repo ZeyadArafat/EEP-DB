@@ -19,7 +19,7 @@ public:
     explicit BufferPoolManager(size_t pool_size, DiskManager* disk_manager);
 
 private:
-    size_t pool_size_;
+    pool_size_t pool_size_;
     DiskManager* disk_manager_;
     std::vector<Page> pages_;
     std::unordered_map<page_id_t, frame_id_t> page_table_;
