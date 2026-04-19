@@ -9,13 +9,16 @@
 
 class DiskManager {
 public:
-    void read_page(page_id_t page_id, char* buffer);
-    void write_page(page_id_t page_id, const char* buffer);
-    page_id_t allocate_page();
-    void deallocate_page(page_id_t page_id);
+    void ReadPage(page_id_t page_id, char* buffer);
+    void WritePage(page_id_t page_id, const char* buffer);
+    [[nodiscard]] page_id_t AllocatePage();
+    void DeallocatePage(page_id_t page_id);
 
     explicit DiskManager(const std::string& file_name);
-    ~DiskManager();
+    ~DiskManager() noexcept;
+    // disable copying file streams
+    DiskManager(const DiskManager&) = delete;
+    DiskManager& operator=(const DiskManager&) = delete;
 
 private:
     std::fstream db_file_;

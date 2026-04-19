@@ -35,7 +35,7 @@ DiskManager::~DiskManager() {
 
 // Reads one page from disk into the provided buffer.
 // If the page has not been written yet, the buffer is zero-filled.
-void DiskManager::read_page(const page_id_t page_id, char* buffer) {
+void DiskManager::ReadPage(const page_id_t page_id, char* buffer) {
     const offset_t offset = static_cast<offset_t>(page_id) * PAGE_SIZE;
 
     // Clear any previous stream state before seeking.
@@ -51,7 +51,7 @@ void DiskManager::read_page(const page_id_t page_id, char* buffer) {
 }
 
 // Writes one page from the provided buffer to disk at the given page id.
-void DiskManager::write_page(const page_id_t page_id, const char* buffer) {
+void DiskManager::WritePage(const page_id_t page_id, const char* buffer) {
     const offset_t offset = static_cast<offset_t>(page_id) * PAGE_SIZE;
 
     // Clear stream state before seeking for writing.
@@ -73,7 +73,7 @@ void DiskManager::write_page(const page_id_t page_id, const char* buffer) {
 
 // Returns a page id for a new page.
 // Reuses a deallocated page if one is available; otherwise extends the file.
-page_id_t DiskManager::allocate_page() {
+page_id_t DiskManager::AllocatePage() {
     if (!free_pages_.empty()) {
         const page_id_t page_id = free_pages_.back();
         free_pages_.pop_back();
@@ -84,6 +84,6 @@ page_id_t DiskManager::allocate_page() {
 }
 
 // Marks a page as free so it can be reused later.
-void DiskManager::deallocate_page(const page_id_t page_id) {
+void DiskManager::DeallocatePage(const page_id_t page_id) {
     free_pages_.push_back(page_id);
 }

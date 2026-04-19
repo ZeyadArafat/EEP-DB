@@ -5,20 +5,23 @@
 #include <vector>
 
 #include "page.h"
+#include "disk_manager.h"
 #include "../config.h"
 
 class BufferPoolManager {
 public:
-    Page* FetchPage(page_id_t page_id);
-    bool UnpinPage(page_id_t page_id, bool is_dirty);
-    Page* NewPage(page_id_t& page_id);
-    bool DeletePage(page_id_t page_id);
-    bool FlushPage(page_id_t page_id);
+    [[nodiscard]] Page* FetchPage(page_id_t page_id);
+    [[nodiscard]] bool UnpinPage(page_id_t page_id, bool is_dirty);
+    [[nodiscard]] Page* NewPage(page_id_t& page_id);
+    [[nodiscard]] bool DeletePage(page_id_t page_id);
+    [[nodiscard]] bool FlushPage(page_id_t page_id);
     void FlushAllPages();
+    explicit BufferPoolManager(size_t pool_size, DiskManager* disk_manager);
 
 private:
-    std::vector<Page*> pages_;
-    std::unordered_map<page_id_t, frame_id_t> page_map_;
+    size_t pool_size_;
+    DiskManager* disk_manager_;
+    std::vector<Page> pages_;
+    std::unordered_map<page_id_t, frame_id_t> page_table_;
     std::list<frame_id_t> free_list_;
-    // TODO: add a replacer
 };
