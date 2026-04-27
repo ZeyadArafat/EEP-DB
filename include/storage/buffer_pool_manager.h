@@ -29,7 +29,7 @@ public:
     BufferPoolManager& operator=(const BufferPoolManager&) = delete;
 
 private:
-    friend class BasicPageGuard;
+    friend class PageGuard;
     /*
      * Guard-only Internal API */
     [[nodiscard]] bool UnpinInternal(page_id_t page_id, bool is_dirty);

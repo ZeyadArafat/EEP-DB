@@ -13,9 +13,9 @@ class Page;
 class PageGuard {
 public:
     PageGuard() = default;
-    PageGuard(BufferPoolManager* bpm, Page* page) noexcept;
+    PageGuard(BufferPoolManager* bpm, Page* page, bool is_dirty_on_drop) noexcept;
 
-    virtual ~PageGuard();
+    ~PageGuard() noexcept;
 
     // non-copyable
     PageGuard(const PageGuard&) = delete;
@@ -25,16 +25,21 @@ public:
     PageGuard(PageGuard&& other) noexcept;
     PageGuard& operator=(PageGuard&& other) noexcept;
 
+    /* tell if this guard currently own a real page */
     [[nodiscard]] bool IsValid() const noexcept;
     [[nodiscard]] page_id_t GetPageId() const noexcept;
 
+private:
+    void stealFrom(PageGuard& other) noexcept;
 protected:
-    virtual bool IsDirtyOnDrop() const noexcept = 0;
-    void Drop() noexcept;
+    [[nodiscard]] bool IsDirtyOnDrop() const noexcept;
+    void Drop() noexcept; /* use when that instance of guard no longer owns the page **/
 
 protected:
     BufferPoolManager* bpm_ = nullptr;
     Page* page_ = nullptr;
+private:
+    bool is_dirty_on_drop_ = false;
 };
 
 
@@ -47,9 +52,6 @@ public:
     ReadPageGuard(BufferPoolManager* bpm, Page* page) noexcept;
 
     [[nodiscard]] const char* GetData() const noexcept;
-
-protected:
-    bool IsDirtyOnDrop() const noexcept override { return false; }
 };
 
 
@@ -64,7 +66,4 @@ public:
 
     [[nodiscard]] char* GetData() noexcept;
     [[nodiscard]] const char* GetData() const noexcept;
-
-protected:
-    bool IsDirtyOnDrop() const noexcept override { return true; }
 };
