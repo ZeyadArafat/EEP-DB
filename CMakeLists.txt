@@ -20,4 +20,5 @@ add_executable(EEPDB main.cpp
         src/storage/page_guard.cpp
         include/execution/token.h
         include/execution/lexer.h
-        src/execution/lexer.cpp)
+        src/execution/lexer.cpp
+        src/storage/buffer_pool_manager.cpp)

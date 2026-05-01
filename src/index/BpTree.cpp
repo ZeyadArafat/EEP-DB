@@ -1,6 +1,7 @@
 #include "../../include/index/BpTree.h"
 #include "../../include/index/BpNode.h"
 
+// TODO: fix : Remove PageManager and use buffer pool manager instead (storage API)
 BpTree::BpTree(PageManager* manager) {
     pm = manager;
     root_page_id = pm->allocate_page();

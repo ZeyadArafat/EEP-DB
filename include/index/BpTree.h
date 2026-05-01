@@ -1,5 +1,6 @@
 #pragma once
 
+// TODO: fix : Remove PageManager and use buffer pool manager instead (storage API)
 #include <iostream>
 #include <ostream>
 #include <cstring>
