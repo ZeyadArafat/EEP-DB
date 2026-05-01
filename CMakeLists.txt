@@ -18,4 +18,6 @@ add_executable(EEPDB main.cpp
         src/index/BpNode.cpp
         include/storage/page_guard.h
         src/storage/page_guard.cpp
-        src/storage/buffer_pool_manager.cpp)
+        include/execution/token.h
+        include/execution/lexer.h
+        src/execution/lexer.cpp)
