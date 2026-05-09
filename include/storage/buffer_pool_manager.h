@@ -42,7 +42,7 @@ private:
     pool_size_t pool_size_;
     DiskManager* disk_manager_;
     // fixed-size frame array
-    std::vector<Page> pages_;
+    std::vector<Page*> pages_;
     // page_id -> frame_id
     std::unordered_map<page_id_t, frame_id_t> page_table_;
     // never-used frames
