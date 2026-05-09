@@ -30,19 +30,20 @@ public:
 
 private:
     friend class PageGuard;
-    /*
-     * Guard-only Internal API */
-    [[nodiscard]] bool UnpinInternal(page_id_t page_id, bool is_dirty);
+    /* Internal API */
+    [[nodiscard]] bool UnpinInternal(page_id_t page_id, bool is_dirty); /* Guard only */
     [[nodiscard]] Page* FetchPageInternal(page_id_t page_id);
     [[nodiscard]] Page* AllocateNewPageInternal();
     [[nodiscard]] frame_id_t AcquireFrame();
     void EvictFrame(frame_id_t frame_id);
 
 private:
+    frame_id_t search_page(page_id_t page_id);
+private:
     pool_size_t pool_size_;
     DiskManager* disk_manager_;
     // fixed-size frame array
-    std::vector<Page*> pages_;
+    std::vector<Page> pages_;
     // page_id -> frame_id
     std::unordered_map<page_id_t, frame_id_t> page_table_;
     // never-used frames
